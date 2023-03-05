@@ -1,0 +1,61 @@
+#heading {
+  margin: 10px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin: 100px;
+}
+
+.sermon-filter-toolbar {
+  padding: 10px 10px 0px 5px;
+}
+
+.sermon-title {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.sermon-row {
+  padding: 15px 0px;
+}
+
+.sermon-scripture {
+
+}
+
+.sermon-author {
+  font-style: italic
+}
+
+.empty-list-message {
+  margin: 10px;
+}
+
+@media (min-width: 640px) {
+  .sermon-filter {
+    width: 200px;
+    margin-right: 10px;
+  }
+}
+
+mat-form-field {
+  margin: 5px 10px;
+}
+
+table {
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+td.mat-column-title {
+  border-bottom-width: 2px;
+}

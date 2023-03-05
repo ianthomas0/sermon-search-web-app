@@ -25,7 +25,7 @@
  * will put import in the top of bundle, so user need to create a separate file
  * in this directory (for example: zone-flags.ts), and put the following flags
  * into that file, and then add the following code before importing zone.js.
- * import './zone-flags.ts';
+ * import './zone-flags';
  *
  * The flags allowed in zone-flags.ts are listed here.
  *
@@ -51,3 +51,16 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+/***************************************************************************************************
+ * SKY UX POLYFILLS - DO NOT MODIFY THIS SECTION
+ */
+
+// Fix for crossvent `global is not defined` error. The crossvent library is used by Dragula,
+// which in turn is used by multiple SKY UX components.
+// https://github.com/bevacqua/dragula/issues/602
+(window as any).global = window;
+
+/*
+ * END SKY UX POLYFILLS
+ **************************************************************************************************/
