@@ -1,0 +1,82 @@
+<main>
+  <mat-toolbar color="primary">
+    <h1 id="heading" class="sky-page-heading">Sermon Search</h1>
+  </mat-toolbar>
+  <div class="sermon-filter-toolbar">
+    <mat-form-field appearance="fill">
+      <mat-label for="book">Book</mat-label>
+      <input
+        matInput
+        placeholder="Pick a book"
+        type="text"
+        [formControl]="selectedBook"
+        [matAutocomplete]="auto"
+        name="book"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let book of filteredBooks | async"
+          [value]="book.name"
+        >
+          {{ book.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label for="chapter">Chapter</mat-label>
+      <input
+        matInput
+        [formControl]="chapter"
+        (change)="searchForBook()"
+        class="sky-form-control sermon-filter"
+        id="chapter"
+        type="text"
+      />
+    </mat-form-field>
+    <button
+      (pointerup)="searchForBook()"
+      type="button"
+      mat-mini-fab
+      color="primary"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="loading" class="spinner-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <table
+    *ngIf="!loading && (sermons | async)?.length > 0"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+  >
+    <div
+      role="note"
+      class="sky-emphasized empty-list-message"
+      *ngIf="searched && (sermons | async).length === 0"
+    >
+      No sermons found matching those search criteria.
+    </div>
+
+    <ng-container matColumnDef="title">
+      <td mat-cell *matCellDef="let row">
+        <div class="sermon-row">
+          <p class="sermon-title">
+            <a href="{{ row.url }}" target="_blank">
+              {{ row.title }}
+            </a>
+          </p>
+          <div class="sermon-scripture">{{ row.scripture }}</div>
+          <div class="sermon-author">
+            {{ row.author }}
+            <ng-container *ngIf="row.source">- {{ row.source }}</ng-container>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+  </mat-paginator>
+</main>
