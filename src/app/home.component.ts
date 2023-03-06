@@ -96,6 +96,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.dataSource.data = response;
           this.sermons.next(response);
           this.searched = true;
+          window.refTaggerCallback();
         },
         (error: any) => {
           this.openErrorDialog();
