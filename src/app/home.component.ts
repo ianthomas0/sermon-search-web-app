@@ -5,21 +5,21 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { SearchService } from './shared/search.service';
-import { Sermon } from './shared/models/sermon';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Books } from './shared/models';
-import { BehaviorSubject, Observable, pipe } from 'rxjs';
+import { Sermon } from './shared/models/sermon';
+import { SearchService } from './shared/search.service';
 
 import { Location } from '@angular/common';
 
-import { ActivatedRoute, Router } from '@angular/router';
-import { Book } from './shared/models/book';
 import { FormControl } from '@angular/forms';
-import { finalize, map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize, map, startWith } from 'rxjs/operators';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { Book } from './shared/models/book';
 
 @Component({
   selector: 'my-home',
@@ -96,6 +96,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.dataSource.data = response;
           this.sermons.next(response);
           this.searched = true;
+          setTimeout(() => {
+            (window as any).refTagger.tag();
+          }, 50);
         },
         (error: any) => {
           this.openErrorDialog();
