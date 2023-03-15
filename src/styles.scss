@@ -30,3 +30,7 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   a { color: #eee;  }
   /*.sermon-title a { text-decoration: underline; }*/
 }
+
+.mat-mdc-form-field-infix {
+  width: 140px !important;
+}
