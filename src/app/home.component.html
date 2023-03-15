@@ -69,10 +69,11 @@
     <button
       (pointerup)="searchForBook()"
       type="button"
-      mat-mini-fab
+      style="margin: -10px 10px 10px 10px"
+      mat-raised-button
       color="primary"
     >
-      <mat-icon>search</mat-icon>
+      Search
     </button>
   </div>
   <div *ngIf="loading" class="spinner-container">
