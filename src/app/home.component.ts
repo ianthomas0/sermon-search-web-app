@@ -62,6 +62,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public ngOnInit(): void {
+    this.searchService.getFilterData().subscribe((data: any) => {
+      this.authors = data.authors;
+      this.sources = data.sources;
+    });
     this.searched = false;
 
     let bookParam = this.route.snapshot.queryParams['book'];

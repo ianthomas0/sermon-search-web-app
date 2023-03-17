@@ -49,4 +49,14 @@ export class SearchService {
         })
       );
   }
+
+  public getFilterData(): Observable<any> {
+    return this.http.get<any>(`${this.url}/api/ListFiltersData`).pipe(
+      catchError((error) => {
+        const errorMessage = `Search error`;
+        console.error(`${errorMessage}: ${error}`);
+        return throwError(errorMessage);
+      })
+    );
+  }
 }
