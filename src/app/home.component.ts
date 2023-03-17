@@ -12,7 +12,7 @@ import { SearchService } from './shared/search.service';
 
 import { Location } from '@angular/common';
 
-import { FormControl } from '@angular/forms';
+import { Form, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public sermons: BehaviorSubject<Sermon[]> = new BehaviorSubject<Sermon[]>([]);
   public searched: boolean;
   public books: Book[] = Books.books;
+  public sources: string[] = ['Desiring God', 'Redeemer Bible Church'];
+  public authors: string[] = ['Kevin DeYoung', 'John Piper', 'Brock Graham'];
   public filteredBooks: Observable<Book[]>;
 
   public sortFields = [
@@ -42,6 +44,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public searchText: string;
   public selectedBook: FormControl = new FormControl();
   public chapter: FormControl = new FormControl();
+  public source: FormControl = new FormControl();
+  public author: FormControl = new FormControl();
 
   public loading: boolean = false;
 
@@ -58,6 +62,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   public ngOnInit(): void {
+    this.searchService.getFilterData().subscribe((data: any) => {
+      this.authors = data.authors;
+      this.sources = data.sources;
+    });
     this.searched = false;
 
     let bookParam = this.route.snapshot.queryParams['book'];
@@ -67,6 +75,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       let foundBook = this.books.find((book: Book) => book.name === bookParam);
       this.selectedBook.patchValue(foundBook.name);
       this.chapter.patchValue(chapterParam);
+      this.searchForBook();
+    } else {
       this.searchForBook();
     }
 
@@ -85,7 +95,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.loading = true;
     this.searchService
-      .searchForBook(this.selectedBook.value, this.chapter.value)
+      .searchForBook(
+        this.selectedBook.value,
+        this.chapter.value,
+        this.source.value,
+        this.author.value
+      )
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -140,6 +155,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
       delete params['chapter'];
     } else {
       params['chapter'] = chapter;
+    }
+
+    if (this.source === null) {
+      delete params['source'];
+    } else {
+      params['source'] = chapter;
+    }
+
+    if (this.author === null) {
+      delete params['author'];
+    } else {
+      params['author'] = chapter;
     }
 
     // Update the URL without triggering a navigation state change.

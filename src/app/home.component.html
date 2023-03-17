@@ -10,10 +10,10 @@
         placeholder="Pick a book"
         type="text"
         [formControl]="selectedBook"
-        [matAutocomplete]="auto"
+        [matAutocomplete]="bookAuto"
         name="book"
       />
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete #bookAuto="matAutocomplete">
         <mat-option
           *ngFor="let book of filteredBooks | async"
           [value]="book.name"
@@ -33,13 +33,47 @@
         type="text"
       />
     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label for="source">Source</mat-label>
+      <input
+        matInput
+        placeholder="Source"
+        type="text"
+        [formControl]="source"
+        source
+        [matAutocomplete]="sourceAuto"
+        name="source"
+      />
+      <mat-autocomplete #sourceAuto="matAutocomplete">
+        <mat-option *ngFor="let source of sources" [value]="source">
+          {{ source }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label for="author">Author</mat-label>
+      <input
+        matInput
+        placeholder="Author"
+        type="text"
+        [formControl]="author"
+        [matAutocomplete]="authorAuto"
+        name="author"
+      />
+      <mat-autocomplete #authorAuto="matAutocomplete">
+        <mat-option *ngFor="let author of authors" [value]="author">
+          {{ author }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
     <button
       (pointerup)="searchForBook()"
       type="button"
-      mat-mini-fab
+      style="margin: -10px 10px 10px 10px"
+      mat-raised-button
       color="primary"
     >
-      <mat-icon>search</mat-icon>
+      Search
     </button>
   </div>
   <div *ngIf="loading" class="spinner-container">

@@ -14,16 +14,31 @@ export class SearchService {
 
   public initialize() {}
 
-  public searchForBook(book: string, chapter: string): Observable<Sermon[]> {
+  public searchForBook(
+    book: string,
+    chapter: string,
+    source: string,
+    author: string
+  ): Observable<Sermon[]> {
     let params: HttpParams = new HttpParams();
-    params = params.append('book', book);
+    if (book) {
+      params = params.append('book', book);
+    }
 
     if (chapter) {
       params = params.append('chapter', chapter);
     }
 
+    if (source) {
+      params = params.append('source', source);
+    }
+
+    if (author) {
+      params = params.append('author', author);
+    }
+
     return this.http
-      .get<Sermon[]>(`${this.url}/api/SearchForSermon`, {
+      .get<Sermon[]>(`${this.url}/api/SermonsList`, {
         params: params,
       })
       .pipe(
@@ -33,5 +48,15 @@ export class SearchService {
           return throwError(errorMessage);
         })
       );
+  }
+
+  public getFilterData(): Observable<any> {
+    return this.http.get<any>(`${this.url}/api/ListFiltersData`).pipe(
+      catchError((error) => {
+        const errorMessage = `Search error`;
+        console.error(`${errorMessage}: ${error}`);
+        return throwError(errorMessage);
+      })
+    );
   }
 }
