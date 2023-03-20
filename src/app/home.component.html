@@ -1,13 +1,16 @@
 <main>
   <mat-toolbar color="primary">
-    <h1 id="heading" class="sky-page-heading">Sermon Search</h1>
+    <h1 id="heading">Preaching Collective</h1>
   </mat-toolbar>
+  <p class="subtitle">
+    And how are they to hear without someone preaching? - Romans 10:14
+  </p>
   <div class="sermon-filter-toolbar">
     <mat-form-field appearance="fill">
       <mat-label for="book">Book</mat-label>
       <input
         matInput
-        placeholder="Pick a book"
+        placeholder="Select a book"
         type="text"
         [formControl]="selectedBook"
         [matAutocomplete]="bookAuto"
@@ -37,7 +40,7 @@
       <mat-label for="source">Source</mat-label>
       <input
         matInput
-        placeholder="Source"
+        placeholder="Select a source"
         type="text"
         [formControl]="source"
         source
@@ -51,10 +54,10 @@
       </mat-autocomplete>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label for="author">Author</mat-label>
+      <mat-label for="author">Preacher</mat-label>
       <input
         matInput
-        placeholder="Author"
+        placeholder="Select a preacher"
         type="text"
         [formControl]="author"
         [matAutocomplete]="authorAuto"
