@@ -31,9 +31,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public sermons: BehaviorSubject<Sermon[]> = new BehaviorSubject<Sermon[]>([]);
   public searched: boolean;
   public books: Book[] = Books.books;
-  public sources: string[] = ['Desiring God', 'Redeemer Bible Church'];
-  public authors: string[] = ['Kevin DeYoung', 'John Piper', 'Brock Graham'];
+  public sources: string[] = ['Desiring God'];
+  public authors: string[] = [''];
   public filteredBooks: Observable<Book[]>;
+  public filteredAuthors: Observable<string[]>;
+  public filteredSources: Observable<string[]>;
 
   public sortFields = [
     { fieldSelector: 'chapter' },
@@ -64,7 +66,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this.searchService.getFilterData().subscribe((data: any) => {
       this.authors = data.authors;
+      this.author.patchValue(this.author.value);
       this.sources = data.sources;
+      this.source.patchValue(this.source.value);
     });
     this.searched = false;
 
@@ -82,7 +86,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.filteredBooks = this.selectedBook.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value))
+      map((value) => this._filterBooks(value))
+    );
+
+    this.filteredSources = this.source.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterSource(value))
+    );
+
+    this.filteredAuthors = this.author.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterAuthor(value))
     );
   }
 
@@ -91,7 +105,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   public searchForBook() {
-    this.setPathParams(this.selectedBook.value, this.chapter.value);
+    this.setPathParams(
+      this.selectedBook.value,
+      this.chapter.value,
+      this.source.value,
+      this.author.value
+    );
 
     this.loading = true;
     this.searchService
@@ -142,7 +161,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return params;
   }
 
-  private setPathParams(book: string | null, chapter: string | null): void {
+  private setPathParams(
+    book: string | null,
+    chapter: string | null,
+    source: string | null,
+    author: string | null
+  ): void {
     const params = this.getPathParams();
 
     if (book === null) {
@@ -160,13 +184,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (this.source === null) {
       delete params['source'];
     } else {
-      params['source'] = chapter;
+      params['source'] = source;
     }
 
     if (this.author === null) {
       delete params['author'];
     } else {
-      params['author'] = chapter;
+      params['author'] = author;
     }
 
     // Update the URL without triggering a navigation state change.
@@ -182,11 +206,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.location.go(url);
   }
 
-  private _filter(value: string): Book[] {
+  private _filterBooks(value: string): Book[] {
     const filterValue = value.toLowerCase();
 
     return this.books.filter((book) =>
       book.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private _filterSource(value: string): string[] {
+    let filterValue = value ? value.toLowerCase() : '';
+
+    return this.sources.filter((source) =>
+      source?.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private _filterAuthor(value: string): string[] {
+    let filterValue = value ? value.toLowerCase() : '';
+
+    return this.authors.filter((author) =>
+      author.toLowerCase().includes(filterValue)
     );
   }
 }

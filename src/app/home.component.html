@@ -48,7 +48,10 @@
         name="source"
       />
       <mat-autocomplete #sourceAuto="matAutocomplete">
-        <mat-option *ngFor="let source of sources" [value]="source">
+        <mat-option
+          *ngFor="let source of filteredSources | async"
+          [value]="source"
+        >
           {{ source }}
         </mat-option>
       </mat-autocomplete>
@@ -64,7 +67,10 @@
         name="author"
       />
       <mat-autocomplete #authorAuto="matAutocomplete">
-        <mat-option *ngFor="let author of authors" [value]="author">
+        <mat-option
+          *ngFor="let author of filteredAuthors | async"
+          [value]="author"
+        >
           {{ author }}
         </mat-option>
       </mat-autocomplete>
