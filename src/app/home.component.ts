@@ -201,13 +201,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       params['chapter'] = chapter;
     }
 
-    if (this.source === null) {
+    if (this.source === null || this.source === '') {
       delete params['source'];
     } else {
       params['source'] = source;
     }
 
-    if (this.author === null) {
+    if (this.author === null || this.author === '') {
       delete params['author'];
     } else {
       params['author'] = author;
