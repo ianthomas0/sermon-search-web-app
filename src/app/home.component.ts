@@ -189,13 +189,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ): void {
     const params = this.getPathParams();
 
-    if (book === null) {
+    if (book === null || book === '') {
       delete params['book'];
     } else {
       params['book'] = book;
     }
 
-    if (chapter === null) {
+    if (chapter === null || chapter === '') {
       delete params['chapter'];
     } else {
       params['chapter'] = chapter;
