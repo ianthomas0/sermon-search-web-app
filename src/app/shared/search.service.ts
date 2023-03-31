@@ -18,7 +18,8 @@ export class SearchService {
     book: string,
     chapter: string,
     source: string,
-    author: string
+    author: string,
+    search: string
   ): Observable<Sermon[]> {
     let params: HttpParams = new HttpParams();
     if (book) {
@@ -36,6 +37,10 @@ export class SearchService {
 
     if (author) {
       params = params.append('author', author);
+    }
+
+    if (search) {
+      params = params.append('search', search);
     }
 
     return this.http

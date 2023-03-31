@@ -7,6 +7,17 @@
   </p>
   <div class="sermon-filter-toolbar">
     <mat-form-field appearance="fill">
+      <mat-label for="search">Title</mat-label>
+      <input
+        matInput
+        placeholder="Search within title"
+        [formControl]="search"
+        class="sky-form-control sermon-filter"
+        id="search"
+        type="text"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label for="book">Book</mat-label>
       <input
         matInput
