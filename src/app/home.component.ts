@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public chapter: FormControl = new FormControl();
   public source: FormControl = new FormControl();
   public author: FormControl = new FormControl();
+  public search: FormControl = new FormControl();
 
   public loading: boolean = false;
 
@@ -76,13 +77,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let chapterParam = this.route.snapshot.queryParams['chapter'];
     let sourceParam = this.route.snapshot.queryParams['source'];
     let authorParam = this.route.snapshot.queryParams['author'];
+    let searchParam = this.route.snapshot.queryParams['search'];
 
-    if (bookParam) {
-      let foundBook = this.books.find((book: Book) => book.name === bookParam);
-      this.selectedBook.patchValue(foundBook.name);
+    if (
+      bookParam ||
+      chapterParam ||
+      sourceParam ||
+      authorParam ||
+      searchParam
+    ) {
+      if (bookParam) {
+        let foundBook = this.books.find(
+          (book: Book) => book.name === bookParam
+        );
+        this.selectedBook.patchValue(foundBook.name);
+      }
       this.chapter.patchValue(chapterParam);
       this.source.patchValue(sourceParam);
       this.author.patchValue(authorParam);
+      this.search.patchValue(searchParam);
       this.searchForBook();
     } else {
       this.searchForBook();
@@ -113,7 +126,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.selectedBook.value,
       this.chapter.value,
       this.source.value,
-      this.author.value
+      this.author.value,
+      this.search.value
     );
 
     this.loading = true;
@@ -122,7 +136,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.selectedBook.value,
         this.chapter.value,
         this.source.value,
-        this.author.value
+        this.author.value,
+        this.search.value
       )
       .pipe(
         finalize(() => {
@@ -169,7 +184,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     book: string | null,
     chapter: string | null,
     source: string | null,
-    author: string | null
+    author: string | null,
+    search: string | null
   ): void {
     const params = this.getPathParams();
 
@@ -195,6 +211,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       delete params['author'];
     } else {
       params['author'] = author;
+    }
+
+    if (this.search === null) {
+      delete params['search'];
+    } else {
+      params['search'] = search;
     }
 
     // Update the URL without triggering a navigation state change.
