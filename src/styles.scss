@@ -23,6 +23,7 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 @media (prefers-color-scheme: light) {
   @include angular-material-theme($light-theme);
   a { color: #1a73e8; }
+  p.subtitle { color: #fff; }
 }
 
 @media (prefers-color-scheme: dark) {
