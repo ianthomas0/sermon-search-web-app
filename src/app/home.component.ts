@@ -226,7 +226,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let filterValue = value ? value.toLowerCase() : '';
 
     return this.authors.filter((author) =>
-      author.toLowerCase().includes(filterValue)
+      author?.toLowerCase().includes(filterValue)
     );
   }
 }
