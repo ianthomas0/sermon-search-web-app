@@ -74,11 +74,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     let bookParam = this.route.snapshot.queryParams['book'];
     let chapterParam = this.route.snapshot.queryParams['chapter'];
+    let sourceParam = this.route.snapshot.queryParams['source'];
+    let authorParam = this.route.snapshot.queryParams['author'];
 
     if (bookParam) {
       let foundBook = this.books.find((book: Book) => book.name === bookParam);
       this.selectedBook.patchValue(foundBook.name);
       this.chapter.patchValue(chapterParam);
+      this.source.patchValue(sourceParam);
+      this.author.patchValue(authorParam);
       this.searchForBook();
     } else {
       this.searchForBook();
