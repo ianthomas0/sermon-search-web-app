@@ -2,7 +2,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { Sermon } from './models';
+import { Books, Sermon } from './models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
@@ -23,6 +23,7 @@ export class SearchService {
     let params: HttpParams = new HttpParams();
     if (book) {
       params = params.append('book', book);
+      params = params.append('bookNum', Books.bookOrderMap[book]);
     }
 
     if (chapter) {
