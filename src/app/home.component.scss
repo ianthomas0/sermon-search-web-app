@@ -39,7 +39,10 @@ p.subtitle {
 }
 
 .empty-list-message {
-  margin: 10px;
+  margin: 21px;
+  font-weight: 400;
+  font-size: 18px;
+  font-style: italic;
 }
 
 @media (min-width: 640px) {

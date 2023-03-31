@@ -99,20 +99,19 @@
   <div *ngIf="loading" class="spinner-container">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
+  <div
+      role="note"
+      class="empty-list-message mat-elevation-z2 headline-5"
+      *ngIf="searched && (sermons | async).length === 0"
+    >
+      No sermons found matching those criteria. Please try again with different options.
+    </div>
   <table
     *ngIf="!loading && (sermons | async)?.length > 0"
     mat-table
     [dataSource]="dataSource"
     class="mat-elevation-z8"
   >
-    <div
-      role="note"
-      class="sky-emphasized empty-list-message"
-      *ngIf="searched && (sermons | async).length === 0"
-    >
-      No sermons found matching those search criteria.
-    </div>
-
     <ng-container matColumnDef="title">
       <td mat-cell *matCellDef="let row">
         <div class="sermon-row">
@@ -131,6 +130,6 @@
     </ng-container>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+  <mat-paginator [pageSizeOptions]="[20, 50]" showFirstLastButtons>
   </mat-paginator>
 </main>
